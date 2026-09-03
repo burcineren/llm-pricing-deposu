@@ -1,0 +1,68 @@
+name: 💸 Price correction
+description: A price, context window or rate limit in the dataset is wrong
+title: "Price correction: "
+labels: ["data", "correction"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks — wrong numbers are the most useful thing you can report.
+        A link to the provider's own pricing page is all that's really needed.
+
+  - type: input
+    id: model_id
+    attributes:
+      label: Model id
+      description: The `id` field from the dataset, e.g. `openai/gpt-4o`.
+      placeholder: provider/model
+    validations:
+      required: true
+
+  - type: dropdown
+    id: field
+    attributes:
+      label: Which field is wrong?
+      options:
+        - pricing.input
+        - pricing.output
+        - pricing.cache_read
+        - pricing.cache_write
+        - pricing.tiers (long-context surcharge)
+        - context.input
+        - context.output
+        - rate_limits
+        - the model should not be listed at all
+        - a model is missing
+        - something else
+    validations:
+      required: true
+
+  - type: input
+    id: current
+    attributes:
+      label: What we currently say
+      placeholder: "$2.50 per 1M input tokens"
+
+  - type: input
+    id: correct
+    attributes:
+      label: What it should say
+      placeholder: "$2.00 per 1M input tokens"
+    validations:
+      required: true
+
+  - type: input
+    id: source
+    attributes:
+      label: Source
+      description: Link to the provider's official pricing or model page.
+      placeholder: https://…
+    validations:
+      required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Anything else
+      description: |
+        Region-specific rate? Tier-dependent? Recently changed? Worth saying here.

@@ -1,0 +1,38 @@
+{
+  "name": "llm-pricing-deposu",
+  "version": "1.0.0",
+  "description": "Daily-updated pricing, context windows and rate limits for every LLM. Machine-readable JSON, cross-verified across sources, with a full price-change history.",
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "update": "node scripts/update.js",
+    "update:offline": "node scripts/update.js --offline",
+    "validate": "node scripts/validate.js",
+    "site": "node scripts/build-site.js",
+    "serve": "node scripts/serve.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/apideposu/llm-pricing-deposu.git"
+  },
+  "keywords": [
+    "llm",
+    "pricing",
+    "openai",
+    "anthropic",
+    "gemini",
+    "cost",
+    "tokens",
+    "context-window",
+    "rate-limits",
+    "ai"
+  ],
+  "author": "API Deposu",
+  "bugs": {
+    "url": "https://github.com/apideposu/llm-pricing-deposu/issues"
+  },
+  "homepage": "https://apideposu.github.io/llm-pricing-deposu/"
+}

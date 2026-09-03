@@ -1,0 +1,25 @@
+{
+  "$comment": [
+    "Hand-maintained corrections. These win over every automated source.",
+    "Keys are model ids ('<provider>/<model>'). Only the fields you list are overridden;",
+    "everything else still comes from the aggregated sources.",
+    "Set a field to null to explicitly blank it out.",
+    "",
+    "Every entry SHOULD carry `_source` (a link to the provider's own pricing page) and",
+    "`_verified` (YYYY-MM-DD). `npm run validate` warns about entries older than 90 days",
+    "so this file cannot silently rot into the very problem this repo exists to solve.",
+    "",
+    "Example:",
+    "  \"openai/gpt-4o\": {",
+    "    \"pricing\": { \"input\": 2.5, \"output\": 10 },",
+    "    \"_source\": \"https://openai.com/api/pricing/\",",
+    "    \"_verified\": \"2026-09-03\",",
+    "    \"_note\": \"Upstream had the pre-August price.\"",
+    "  }"
+  ],
+  "models": {},
+  "hide": {
+    "$comment": "Model ids (or '<provider>/*' globs) to drop from the dataset entirely — dead endpoints, test entries, duplicates.",
+    "ids": []
+  }
+}

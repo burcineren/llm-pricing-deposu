@@ -1,0 +1,42 @@
+name: 🔌 Suggest a data source
+description: A public feed we should be merging
+title: "Source: "
+labels: ["source"]
+body:
+  - type: input
+    id: name
+    attributes:
+      label: Source name
+    validations:
+      required: true
+
+  - type: input
+    id: url
+    attributes:
+      label: URL of the feed
+      description: The machine-readable endpoint or file, not the marketing page.
+      placeholder: https://…/models.json
+    validations:
+      required: true
+
+  - type: dropdown
+    id: license
+    attributes:
+      label: Can we use it?
+      options:
+        - Open source (MIT/Apache/similar)
+        - Public API, no auth required
+        - Public API, needs a free key
+        - Not sure
+    validations:
+      required: true
+
+  - type: textarea
+    id: value
+    attributes:
+      label: What does it add that we don't already have?
+      description: |
+        Coverage of providers we miss? Fields nobody else publishes (rate limits,
+        batch pricing, region-specific rates)? Fresher than the others?
+    validations:
+      required: true

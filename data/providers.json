@@ -1,0 +1,808 @@
+{
+  "meta": {
+    "generated_at": "2026-09-03T08:23:13.394Z",
+    "count": 80
+  },
+  "providers": [
+    {
+      "slug": "bedrock",
+      "name": "AWS Bedrock",
+      "tier": "cloud",
+      "pricing_url": "https://aws.amazon.com/bedrock/pricing/",
+      "docs_url": "https://docs.aws.amazon.com/bedrock/latest/userguide/models-supported.html",
+      "models": 446,
+      "chat_models": 395,
+      "priced_models": 378
+    },
+    {
+      "slug": "fireworks_ai",
+      "name": "Fireworks AI",
+      "tier": "inference",
+      "pricing_url": "https://fireworks.ai/pricing",
+      "docs_url": "https://docs.fireworks.ai/",
+      "models": 323,
+      "chat_models": 300,
+      "priced_models": 315
+    },
+    {
+      "slug": "openai",
+      "name": "OpenAI",
+      "tier": "frontier",
+      "pricing_url": "https://openai.com/api/pricing/",
+      "docs_url": "https://platform.openai.com/docs/models",
+      "models": 215,
+      "chat_models": 134,
+      "priced_models": 155
+    },
+    {
+      "slug": "azure",
+      "name": "Azure OpenAI",
+      "tier": "cloud",
+      "pricing_url": "https://azure.microsoft.com/en-us/pricing/details/cognitive-services/openai-service/",
+      "docs_url": "https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models",
+      "models": 198,
+      "chat_models": 171,
+      "priced_models": 194
+    },
+    {
+      "slug": "vertex_ai",
+      "name": "Google Vertex AI",
+      "tier": "cloud",
+      "pricing_url": "https://cloud.google.com/vertex-ai/generative-ai/pricing",
+      "docs_url": "https://cloud.google.com/vertex-ai/generative-ai/docs/models",
+      "models": 159,
+      "chat_models": 120,
+      "priced_models": 133
+    },
+    {
+      "slug": "deepinfra",
+      "name": "DeepInfra",
+      "tier": "inference",
+      "pricing_url": "https://deepinfra.com/pricing",
+      "docs_url": null,
+      "models": 135,
+      "chat_models": 135,
+      "priced_models": 135
+    },
+    {
+      "slug": "novita",
+      "name": "Novita AI",
+      "tier": "inference",
+      "pricing_url": "https://novita.ai/pricing",
+      "docs_url": null,
+      "models": 135,
+      "chat_models": 130,
+      "priced_models": 135
+    },
+    {
+      "slug": "azure_ai",
+      "name": "Azure AI Foundry",
+      "tier": "cloud",
+      "pricing_url": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry/",
+      "docs_url": "https://learn.microsoft.com/en-us/azure/ai-foundry/",
+      "models": 109,
+      "chat_models": 95,
+      "priced_models": 101
+    },
+    {
+      "slug": "vercel_ai_gateway",
+      "name": "Vercel AI Gateway",
+      "tier": "gateway",
+      "pricing_url": "https://vercel.com/docs/ai-gateway/pricing",
+      "docs_url": null,
+      "models": 101,
+      "chat_models": 95,
+      "priced_models": 101
+    },
+    {
+      "slug": "openrouter",
+      "name": "OpenRouter",
+      "tier": "gateway",
+      "pricing_url": "https://openrouter.ai/models",
+      "docs_url": "https://openrouter.ai/docs",
+      "models": 100,
+      "chat_models": 100,
+      "priced_models": 97
+    },
+    {
+      "slug": "gemini",
+      "name": "Google Gemini",
+      "tier": "frontier",
+      "pricing_url": "https://ai.google.dev/gemini-api/docs/pricing",
+      "docs_url": "https://ai.google.dev/gemini-api/docs/models",
+      "models": 82,
+      "chat_models": 49,
+      "priced_models": 62
+    },
+    {
+      "slug": "mistral",
+      "name": "Mistral AI",
+      "tier": "frontier",
+      "pricing_url": "https://mistral.ai/pricing#api-pricing",
+      "docs_url": "https://docs.mistral.ai/getting-started/models/models_overview/",
+      "models": 81,
+      "chat_models": 70,
+      "priced_models": 71
+    },
+    {
+      "slug": "fal_ai",
+      "name": "fal.ai",
+      "tier": "specialist",
+      "pricing_url": "https://fal.ai/pricing",
+      "docs_url": null,
+      "models": 71,
+      "chat_models": 0,
+      "priced_models": 0
+    },
+    {
+      "slug": "together_ai",
+      "name": "Together AI",
+      "tier": "inference",
+      "pricing_url": "https://www.together.ai/pricing",
+      "docs_url": "https://docs.together.ai/docs/serverless-models",
+      "models": 69,
+      "chat_models": 64,
+      "priced_models": 61
+    },
+    {
+      "slug": "databricks",
+      "name": "Databricks",
+      "tier": "cloud",
+      "pricing_url": "https://www.databricks.com/product/pricing/foundation-model-serving",
+      "docs_url": "https://docs.databricks.com/en/machine-learning/foundation-models/",
+      "models": 52,
+      "chat_models": 50,
+      "priced_models": 51
+    },
+    {
+      "slug": "xai",
+      "name": "xAI",
+      "tier": "frontier",
+      "pricing_url": "https://docs.x.ai/docs/models",
+      "docs_url": "https://docs.x.ai/docs/models",
+      "models": 51,
+      "chat_models": 43,
+      "priced_models": 43
+    },
+    {
+      "slug": "perplexity",
+      "name": "Perplexity",
+      "tier": "inference",
+      "pricing_url": "https://docs.perplexity.ai/getting-started/pricing",
+      "docs_url": null,
+      "models": 46,
+      "chat_models": 42,
+      "priced_models": 28
+    },
+    {
+      "slug": "oci",
+      "name": "Oracle OCI GenAI",
+      "tier": "cloud",
+      "pricing_url": "https://www.oracle.com/artificial-intelligence/generative-ai/pricing/",
+      "docs_url": null,
+      "models": 44,
+      "chat_models": 35,
+      "priced_models": 44
+    },
+    {
+      "slug": "qwen_ai_platform",
+      "name": "Qwen",
+      "tier": "frontier",
+      "pricing_url": "https://www.alibabacloud.com/help/en/model-studio/models",
+      "docs_url": "https://www.alibabacloud.com/help/en/model-studio/",
+      "models": 41,
+      "chat_models": 41,
+      "priced_models": 25
+    },
+    {
+      "slug": "replicate",
+      "name": "Replicate",
+      "tier": "inference",
+      "pricing_url": "https://replicate.com/pricing",
+      "docs_url": null,
+      "models": 40,
+      "chat_models": 40,
+      "priced_models": 40
+    },
+    {
+      "slug": "snowflake",
+      "name": "Snowflake Cortex",
+      "tier": "cloud",
+      "pricing_url": "https://www.snowflake.com/legal-files/CreditConsumptionTable.pdf",
+      "docs_url": null,
+      "models": 37,
+      "chat_models": 35,
+      "priced_models": 21
+    },
+    {
+      "slug": "deepgram",
+      "name": "Deepgram",
+      "tier": "specialist",
+      "pricing_url": "https://deepgram.com/pricing",
+      "docs_url": null,
+      "models": 36,
+      "chat_models": 0,
+      "priced_models": 0
+    },
+    {
+      "slug": "wandb",
+      "name": "W&B Inference",
+      "tier": "cloud",
+      "pricing_url": null,
+      "docs_url": null,
+      "models": 35,
+      "chat_models": 35,
+      "priced_models": 28
+    },
+    {
+      "slug": "cloudflare",
+      "name": "Cloudflare Workers AI",
+      "tier": "cloud",
+      "pricing_url": "https://developers.cloudflare.com/workers-ai/platform/pricing/",
+      "docs_url": null,
+      "models": 30,
+      "chat_models": 30,
+      "priced_models": 26
+    },
+    {
+      "slug": "nebius",
+      "name": "Nebius AI Studio",
+      "tier": "cloud",
+      "pricing_url": "https://nebius.com/prices-ai-studio",
+      "docs_url": null,
+      "models": 30,
+      "chat_models": 27,
+      "priced_models": 30
+    },
+    {
+      "slug": "github_copilot",
+      "name": "GitHub Copilot",
+      "tier": "gateway",
+      "pricing_url": null,
+      "docs_url": null,
+      "models": 29,
+      "chat_models": 29,
+      "priced_models": 2
+    },
+    {
+      "slug": "ollama",
+      "name": "Ollama (local)",
+      "tier": "local",
+      "pricing_url": null,
+      "docs_url": "https://ollama.com/library",
+      "models": 29,
+      "chat_models": 21,
+      "priced_models": 29
+    },
+    {
+      "slug": "watsonx",
+      "name": "IBM watsonx",
+      "tier": "cloud",
+      "pricing_url": "https://www.ibm.com/products/watsonx-ai/pricing",
+      "docs_url": "https://www.ibm.com/docs/en/watsonx",
+      "models": 29,
+      "chat_models": 28,
+      "priced_models": 28
+    },
+    {
+      "slug": "anthropic",
+      "name": "Anthropic",
+      "tier": "frontier",
+      "pricing_url": "https://www.anthropic.com/pricing#api",
+      "docs_url": "https://docs.claude.com/en/docs/about-claude/models",
+      "models": 27,
+      "chat_models": 27,
+      "priced_models": 27
+    },
+    {
+      "slug": "voyage",
+      "name": "Voyage AI",
+      "tier": "specialist",
+      "pricing_url": "https://docs.voyageai.com/docs/pricing",
+      "docs_url": null,
+      "models": 25,
+      "chat_models": 0,
+      "priced_models": 25
+    },
+    {
+      "slug": "moonshot",
+      "name": "Moonshot AI (Kimi)",
+      "tier": "frontier",
+      "pricing_url": "https://platform.moonshot.ai/docs/pricing/chat",
+      "docs_url": "https://platform.moonshot.ai/docs/",
+      "models": 24,
+      "chat_models": 24,
+      "priced_models": 24
+    },
+    {
+      "slug": "stability",
+      "name": "Stability AI",
+      "tier": "specialist",
+      "pricing_url": "https://platform.stability.ai/pricing",
+      "docs_url": null,
+      "models": 23,
+      "chat_models": 0,
+      "priced_models": 0
+    },
+    {
+      "slug": "cohere",
+      "name": "Cohere",
+      "tier": "frontier",
+      "pricing_url": "https://cohere.com/pricing",
+      "docs_url": "https://docs.cohere.com/docs/models",
+      "models": 22,
+      "chat_models": 7,
+      "priced_models": 17
+    },
+    {
+      "slug": "lambda_ai",
+      "name": "Lambda",
+      "tier": "cloud",
+      "pricing_url": null,
+      "docs_url": null,
+      "models": 20,
+      "chat_models": 20,
+      "priced_models": 20
+    },
+    {
+      "slug": "sambanova",
+      "name": "SambaNova",
+      "tier": "inference",
+      "pricing_url": "https://cloud.sambanova.ai/plans/pricing",
+      "docs_url": null,
+      "models": 19,
+      "chat_models": 19,
+      "priced_models": 19
+    },
+    {
+      "slug": "gmi",
+      "name": "GMI Cloud",
+      "tier": "cloud",
+      "pricing_url": null,
+      "docs_url": null,
+      "models": 17,
+      "chat_models": 17,
+      "priced_models": 17
+    },
+    {
+      "slug": "groq",
+      "name": "Groq",
+      "tier": "inference",
+      "pricing_url": "https://groq.com/pricing/",
+      "docs_url": "https://console.groq.com/docs/models",
+      "models": 17,
+      "chat_models": 15,
+      "priced_models": 15
+    },
+    {
+      "slug": "scaleway",
+      "name": "Scaleway",
+      "tier": "cloud",
+      "pricing_url": "https://www.scaleway.com/en/pricing/model-as-a-service/",
+      "docs_url": null,
+      "models": 17,
+      "chat_models": 14,
+      "priced_models": 17
+    },
+    {
+      "slug": "hyperbolic",
+      "name": "Hyperbolic",
+      "tier": "inference",
+      "pricing_url": "https://hyperbolic.xyz/pricing",
+      "docs_url": null,
+      "models": 16,
+      "chat_models": 16,
+      "priced_models": 16
+    },
+    {
+      "slug": "llamagate",
+      "name": "LlamaGate",
+      "tier": "inference",
+      "pricing_url": null,
+      "docs_url": null,
+      "models": 16,
+      "chat_models": 14,
+      "priced_models": 16
+    },
+    {
+      "slug": "zai",
+      "name": "Z.ai (GLM)",
+      "tier": "frontier",
+      "pricing_url": "https://docs.z.ai/guides/overview/pricing",
+      "docs_url": "https://docs.z.ai/",
+      "models": 16,
+      "chat_models": 16,
+      "priced_models": 14
+    },
+    {
+      "slug": "ovhcloud",
+      "name": "OVHcloud AI Endpoints",
+      "tier": "cloud",
+      "pricing_url": "https://www.ovhcloud.com/en/public-cloud/prices/",
+      "docs_url": null,
+      "models": 15,
+      "chat_models": 15,
+      "priced_models": 15
+    },
+    {
+      "slug": "nscale",
+      "name": "Nscale",
+      "tier": "cloud",
+      "pricing_url": null,
+      "docs_url": null,
+      "models": 14,
+      "chat_models": 14,
+      "priced_models": 14
+    },
+    {
+      "slug": "aiml",
+      "name": "AI/ML API",
+      "tier": "gateway",
+      "pricing_url": null,
+      "docs_url": null,
+      "models": 13,
+      "chat_models": 0,
+      "priced_models": 0
+    },
+    {
+      "slug": "gradient_ai",
+      "name": "DigitalOcean Gradient AI",
+      "tier": "cloud",
+      "pricing_url": null,
+      "docs_url": null,
+      "models": 13,
+      "chat_models": 13,
+      "priced_models": 10
+    },
+    {
+      "slug": "ai21",
+      "name": "AI21 Labs",
+      "tier": "frontier",
+      "pricing_url": "https://www.ai21.com/pricing/",
+      "docs_url": "https://docs.ai21.com/",
+      "models": 12,
+      "chat_models": 9,
+      "priced_models": 12
+    },
+    {
+      "slug": "anyscale",
+      "name": "Anyscale",
+      "tier": "inference",
+      "pricing_url": null,
+      "docs_url": null,
+      "models": 12,
+      "chat_models": 12,
+      "priced_models": 12
+    },
+    {
+      "slug": "libertai",
+      "name": "LibertAI",
+      "tier": "cloud",
+      "pricing_url": null,
+      "docs_url": null,
+      "models": 12,
+      "chat_models": 11,
+      "priced_models": 12
+    },
+    {
+      "slug": "runwayml",
+      "name": "Runway",
+      "tier": "specialist",
+      "pricing_url": null,
+      "docs_url": null,
+      "models": 12,
+      "chat_models": 0,
+      "priced_models": 0
+    },
+    {
+      "slug": "volcengine",
+      "name": "Volcengine (Doubao)",
+      "tier": "frontier",
+      "pricing_url": null,
+      "docs_url": null,
+      "models": 12,
+      "chat_models": 7,
+      "priced_models": 0
+    },
+    {
+      "slug": "baseten",
+      "name": "Baseten",
+      "tier": "cloud",
+      "pricing_url": null,
+      "docs_url": null,
+      "models": 11,
+      "chat_models": 11,
+      "priced_models": 11
+    },
+    {
+      "slug": "tensormesh",
+      "name": "TensorMesh",
+      "tier": "inference",
+      "pricing_url": null,
+      "docs_url": null,
+      "models": 10,
+      "chat_models": 10,
+      "priced_models": 10
+    },
+    {
+      "slug": "deepseek",
+      "name": "DeepSeek",
+      "tier": "frontier",
+      "pricing_url": "https://api-docs.deepseek.com/quick_start/pricing",
+      "docs_url": "https://api-docs.deepseek.com/",
+      "models": 9,
+      "chat_models": 9,
+      "priced_models": 9
+    },
+    {
+      "slug": "publicai",
+      "name": "Public AI",
+      "tier": "frontier",
+      "pricing_url": null,
+      "docs_url": null,
+      "models": 9,
+      "chat_models": 9,
+      "priced_models": 0
+    },
+    {
+      "slug": "black_forest_labs",
+      "name": "Black Forest Labs (FLUX)",
+      "tier": "specialist",
+      "pricing_url": null,
+      "docs_url": null,
+      "models": 8,
+      "chat_models": 0,
+      "priced_models": 0
+    },
+    {
+      "slug": "cerebras",
+      "name": "Cerebras",
+      "tier": "inference",
+      "pricing_url": "https://www.cerebras.ai/pricing",
+      "docs_url": null,
+      "models": 8,
+      "chat_models": 8,
+      "priced_models": 8
+    },
+    {
+      "slug": "crusoe",
+      "name": "Crusoe",
+      "tier": "cloud",
+      "pricing_url": null,
+      "docs_url": null,
+      "models": 7,
+      "chat_models": 7,
+      "priced_models": 7
+    },
+    {
+      "slug": "gigachat",
+      "name": "GigaChat",
+      "tier": "frontier",
+      "pricing_url": null,
+      "docs_url": null,
+      "models": 7,
+      "chat_models": 3,
+      "priced_models": 0
+    },
+    {
+      "slug": "meta_llama",
+      "name": "Meta Llama API",
+      "tier": "frontier",
+      "pricing_url": "https://llama.developer.meta.com/",
+      "docs_url": "https://llama.developer.meta.com/docs/",
+      "models": 7,
+      "chat_models": 7,
+      "priced_models": 3
+    },
+    {
+      "slug": "minimax",
+      "name": "MiniMax",
+      "tier": "frontier",
+      "pricing_url": "https://www.minimax.io/price",
+      "docs_url": "https://www.minimax.io/platform/document",
+      "models": 6,
+      "chat_models": 6,
+      "priced_models": 6
+    },
+    {
+      "slug": "pinstripes",
+      "name": "Pinstripes",
+      "tier": "specialist",
+      "pricing_url": null,
+      "docs_url": null,
+      "models": 6,
+      "chat_models": 6,
+      "priced_models": 6
+    },
+    {
+      "slug": "lemonade",
+      "name": "Lemonade",
+      "tier": "inference",
+      "pricing_url": null,
+      "docs_url": null,
+      "models": 5,
+      "chat_models": 5,
+      "priced_models": 0
+    },
+    {
+      "slug": "friendliai",
+      "name": "FriendliAI",
+      "tier": "inference",
+      "pricing_url": null,
+      "docs_url": null,
+      "models": 4,
+      "chat_models": 4,
+      "priced_models": 4
+    },
+    {
+      "slug": "heroku",
+      "name": "Heroku Managed Inference",
+      "tier": "cloud",
+      "pricing_url": null,
+      "docs_url": null,
+      "models": 4,
+      "chat_models": 4,
+      "priced_models": 0
+    },
+    {
+      "slug": "cognition",
+      "name": "Cognition",
+      "tier": "frontier",
+      "pricing_url": null,
+      "docs_url": null,
+      "models": 3,
+      "chat_models": 3,
+      "priced_models": 3
+    },
+    {
+      "slug": "elevenlabs",
+      "name": "ElevenLabs",
+      "tier": "specialist",
+      "pricing_url": "https://elevenlabs.io/pricing",
+      "docs_url": null,
+      "models": 3,
+      "chat_models": 0,
+      "priced_models": 0
+    },
+    {
+      "slug": "nvidia_nim",
+      "name": "NVIDIA NIM",
+      "tier": "cloud",
+      "pricing_url": null,
+      "docs_url": null,
+      "models": 3,
+      "chat_models": 0,
+      "priced_models": 0
+    },
+    {
+      "slug": "tencent",
+      "name": "Tencent Hunyuan",
+      "tier": "frontier",
+      "pricing_url": null,
+      "docs_url": null,
+      "models": 3,
+      "chat_models": 3,
+      "priced_models": 3
+    },
+    {
+      "slug": "v0",
+      "name": "v0",
+      "tier": "gateway",
+      "pricing_url": null,
+      "docs_url": null,
+      "models": 3,
+      "chat_models": 3,
+      "priced_models": 3
+    },
+    {
+      "slug": "assemblyai",
+      "name": "AssemblyAI",
+      "tier": "specialist",
+      "pricing_url": "https://www.assemblyai.com/pricing",
+      "docs_url": null,
+      "models": 2,
+      "chat_models": 0,
+      "priced_models": 0
+    },
+    {
+      "slug": "darkbloom",
+      "name": "Darkbloom",
+      "tier": "specialist",
+      "pricing_url": null,
+      "docs_url": null,
+      "models": 2,
+      "chat_models": 2,
+      "priced_models": 2
+    },
+    {
+      "slug": "featherless_ai",
+      "name": "Featherless AI",
+      "tier": "inference",
+      "pricing_url": null,
+      "docs_url": null,
+      "models": 2,
+      "chat_models": 2,
+      "priced_models": 0
+    },
+    {
+      "slug": "inception",
+      "name": "Inception Labs",
+      "tier": "frontier",
+      "pricing_url": null,
+      "docs_url": "https://platform.inceptionlabs.ai/docs",
+      "models": 2,
+      "chat_models": 1,
+      "priced_models": 2
+    },
+    {
+      "slug": "morph",
+      "name": "Morph",
+      "tier": "frontier",
+      "pricing_url": null,
+      "docs_url": null,
+      "models": 2,
+      "chat_models": 2,
+      "priced_models": 2
+    },
+    {
+      "slug": "nlp_cloud",
+      "name": "NLP Cloud",
+      "tier": "inference",
+      "pricing_url": null,
+      "docs_url": null,
+      "models": 2,
+      "chat_models": 1,
+      "priced_models": 2
+    },
+    {
+      "slug": "recraft",
+      "name": "Recraft",
+      "tier": "specialist",
+      "pricing_url": null,
+      "docs_url": null,
+      "models": 2,
+      "chat_models": 0,
+      "priced_models": 0
+    },
+    {
+      "slug": "scx-ai",
+      "name": "SCX AI",
+      "tier": "specialist",
+      "pricing_url": null,
+      "docs_url": null,
+      "models": 2,
+      "chat_models": 2,
+      "priced_models": 2
+    },
+    {
+      "slug": "soniox",
+      "name": "Soniox",
+      "tier": "specialist",
+      "pricing_url": null,
+      "docs_url": null,
+      "models": 2,
+      "chat_models": 0,
+      "priced_models": 0
+    },
+    {
+      "slug": "jina_ai",
+      "name": "Jina AI",
+      "tier": "specialist",
+      "pricing_url": null,
+      "docs_url": null,
+      "models": 1,
+      "chat_models": 0,
+      "priced_models": 1
+    },
+    {
+      "slug": "sarvam",
+      "name": "Sarvam AI",
+      "tier": "frontier",
+      "pricing_url": null,
+      "docs_url": null,
+      "models": 1,
+      "chat_models": 1,
+      "priced_models": 0
+    }
+  ]
+}

@@ -1,0 +1,146 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://apideposu.github.io/llm-pricing-deposu/schema/model.schema.json",
+  "title": "LLM Pricing Deposu — Model Record",
+  "description": "Normalized pricing, context and capability record for a single model on a single provider. All monetary values are USD per 1,000,000 tokens unless the field name says otherwise.",
+  "type": "object",
+  "required": ["id", "provider", "model", "mode", "pricing", "context", "sources", "updated_at"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Stable key: \"<provider>/<model>\". Use this to join against your own tables.",
+      "examples": ["openai/gpt-4o", "anthropic/claude-sonnet-4-20250514"]
+    },
+    "provider": {
+      "type": "string",
+      "description": "Normalized provider slug. See data/providers.json."
+    },
+    "model": {
+      "type": "string",
+      "description": "Model name as the provider's API expects it, without the provider prefix."
+    },
+    "display_name": { "type": "string" },
+    "family": {
+      "type": ["string", "null"],
+      "description": "Best-effort model family, e.g. \"gpt-4o\", \"claude-sonnet\", \"gemini-2.5\"."
+    },
+    "mode": {
+      "type": "string",
+      "description": "What the model does.",
+      "enum": [
+        "chat", "completion", "embedding", "rerank", "moderation",
+        "image_generation", "image_edit", "video_generation",
+        "audio_transcription", "audio_speech", "responses", "other"
+      ]
+    },
+    "context": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "input": { "type": ["integer", "null"], "description": "Max input tokens." },
+        "output": { "type": ["integer", "null"], "description": "Max output tokens." },
+        "total": { "type": ["integer", "null"], "description": "Max total tokens, when the provider states a combined limit." }
+      }
+    },
+    "pricing": {
+      "type": "object",
+      "description": "USD per 1M tokens. null means the provider does not publish (or does not charge for) that dimension.",
+      "additionalProperties": false,
+      "properties": {
+        "input": { "type": ["number", "null"] },
+        "output": { "type": ["number", "null"] },
+        "cache_read": { "type": ["number", "null"], "description": "Reading a cached prompt prefix." },
+        "cache_write": { "type": ["number", "null"], "description": "Writing/creating a prompt cache entry." },
+        "input_batch": { "type": ["number", "null"], "description": "Batch / async tier input price." },
+        "output_batch": { "type": ["number", "null"] },
+        "input_audio": { "type": ["number", "null"] },
+        "output_audio": { "type": ["number", "null"] },
+        "reasoning": { "type": ["number", "null"], "description": "Separately billed reasoning tokens, where applicable." },
+        "per_image": { "type": ["number", "null"], "description": "USD per image (image models). NOT per 1M." },
+        "per_second": { "type": ["number", "null"], "description": "USD per second (audio/video models). NOT per 1M." },
+        "per_request": { "type": ["number", "null"], "description": "USD per request. NOT per 1M." },
+        "tiers": {
+          "type": "array",
+          "description": "Long-context surcharges. Applies once the request exceeds `above_tokens`.",
+          "items": {
+            "type": "object",
+            "required": ["above_tokens"],
+            "additionalProperties": false,
+            "properties": {
+              "above_tokens": { "type": "integer" },
+              "input": { "type": ["number", "null"] },
+              "output": { "type": ["number", "null"] },
+              "cache_read": { "type": ["number", "null"] },
+              "cache_write": { "type": ["number", "null"] }
+            }
+          }
+        }
+      }
+    },
+    "rate_limits": {
+      "type": "object",
+      "description": "Default published limits. Almost always tier-dependent — treat as a hint, not a contract.",
+      "additionalProperties": false,
+      "properties": {
+        "rpm": { "type": ["integer", "null"], "description": "Requests per minute." },
+        "tpm": { "type": ["integer", "null"], "description": "Tokens per minute." },
+        "rpd": { "type": ["integer", "null"], "description": "Requests per day." }
+      }
+    },
+    "capabilities": {
+      "type": "object",
+      "additionalProperties": { "type": "boolean" },
+      "description": "Feature flags: vision, function_calling, prompt_caching, reasoning, structured_output, pdf_input, computer_use, web_search, audio_input, audio_output."
+    },
+    "modalities": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "input": { "type": "array", "items": { "type": "string" } },
+        "output": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "knowledge_cutoff": { "type": ["string", "null"] },
+    "released_at": { "type": ["string", "null"], "format": "date" },
+    "deprecated_at": {
+      "type": ["string", "null"],
+      "format": "date",
+      "description": "Announced retirement date. Past dates mean the model is gone."
+    },
+    "open_weights": { "type": ["boolean", "null"] },
+    "sources": {
+      "type": "array",
+      "description": "Which upstream sources contributed to this record, highest precedence first.",
+      "items": { "type": "string" },
+      "minItems": 1
+    },
+    "conflicts": {
+      "type": "array",
+      "description": "Fields where sources disagreed. The winning value is in `pricing`/`context`; every candidate is listed here so you can audit it.",
+      "items": {
+        "type": "object",
+        "required": ["field", "values"],
+        "additionalProperties": false,
+        "properties": {
+          "field": { "type": "string" },
+          "values": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["source", "value"],
+              "additionalProperties": false,
+              "properties": {
+                "source": { "type": "string" },
+                "value": { "type": ["number", "integer", "null"] }
+              }
+            }
+          }
+        }
+      }
+    },
+    "docs_url": { "type": ["string", "null"] },
+    "pricing_url": { "type": ["string", "null"] },
+    "updated_at": { "type": "string", "format": "date-time" }
+  }
+}

@@ -1,0 +1,231 @@
+{
+  "$comment": "Curated provider registry. `aliases` collapse upstream provider slugs into one canonical slug. `tier` groups providers on the site. Edit by hand; the pipeline never rewrites this file.",
+  "providers": {
+    "openai": {
+      "name": "OpenAI",
+      "tier": "frontier",
+      "pricing_url": "https://openai.com/api/pricing/",
+      "docs_url": "https://platform.openai.com/docs/models",
+      "aliases": ["text-completion-openai", "chatgpt"]
+    },
+    "anthropic": {
+      "name": "Anthropic",
+      "tier": "frontier",
+      "pricing_url": "https://www.anthropic.com/pricing#api",
+      "docs_url": "https://docs.claude.com/en/docs/about-claude/models"
+    },
+    "gemini": {
+      "name": "Google Gemini",
+      "tier": "frontier",
+      "pricing_url": "https://ai.google.dev/gemini-api/docs/pricing",
+      "docs_url": "https://ai.google.dev/gemini-api/docs/models",
+      "aliases": ["palm"]
+    },
+    "xai": {
+      "name": "xAI",
+      "tier": "frontier",
+      "pricing_url": "https://docs.x.ai/docs/models",
+      "docs_url": "https://docs.x.ai/docs/models"
+    },
+    "deepseek": {
+      "name": "DeepSeek",
+      "tier": "frontier",
+      "pricing_url": "https://api-docs.deepseek.com/quick_start/pricing",
+      "docs_url": "https://api-docs.deepseek.com/"
+    },
+    "mistral": {
+      "name": "Mistral AI",
+      "tier": "frontier",
+      "pricing_url": "https://mistral.ai/pricing#api-pricing",
+      "docs_url": "https://docs.mistral.ai/getting-started/models/models_overview/",
+      "aliases": ["codestral", "text-completion-codestral"]
+    },
+    "cohere": {
+      "name": "Cohere",
+      "tier": "frontier",
+      "pricing_url": "https://cohere.com/pricing",
+      "docs_url": "https://docs.cohere.com/docs/models",
+      "aliases": ["cohere_chat"]
+    },
+    "zai": {
+      "name": "Z.ai (GLM)",
+      "tier": "frontier",
+      "pricing_url": "https://docs.z.ai/guides/overview/pricing",
+      "docs_url": "https://docs.z.ai/"
+    },
+    "moonshot": {
+      "name": "Moonshot AI (Kimi)",
+      "tier": "frontier",
+      "pricing_url": "https://platform.moonshot.ai/docs/pricing/chat",
+      "docs_url": "https://platform.moonshot.ai/docs/"
+    },
+    "qwen_ai_platform": {
+      "name": "Qwen",
+      "tier": "frontier",
+      "pricing_url": "https://www.alibabacloud.com/help/en/model-studio/models",
+      "docs_url": "https://www.alibabacloud.com/help/en/model-studio/",
+      "aliases": ["qwencloud", "dashscope"]
+    },
+    "ai21": {
+      "name": "AI21 Labs",
+      "tier": "frontier",
+      "pricing_url": "https://www.ai21.com/pricing/",
+      "docs_url": "https://docs.ai21.com/"
+    },
+    "minimax": {
+      "name": "MiniMax",
+      "tier": "frontier",
+      "pricing_url": "https://www.minimax.io/price",
+      "docs_url": "https://www.minimax.io/platform/document"
+    },
+    "meta_llama": {
+      "name": "Meta Llama API",
+      "tier": "frontier",
+      "pricing_url": "https://llama.developer.meta.com/",
+      "docs_url": "https://llama.developer.meta.com/docs/",
+      "aliases": ["meta"]
+    },
+    "inception": {
+      "name": "Inception Labs",
+      "tier": "frontier",
+      "docs_url": "https://platform.inceptionlabs.ai/docs",
+      "aliases": ["text-completion-inception"]
+    },
+    "gigachat": { "name": "GigaChat", "tier": "frontier" },
+    "publicai": { "name": "Public AI", "tier": "frontier" },
+    "tencent": { "name": "Tencent Hunyuan", "tier": "frontier" },
+    "volcengine": { "name": "Volcengine (Doubao)", "tier": "frontier" },
+    "sarvam": { "name": "Sarvam AI", "tier": "frontier" },
+    "cognition": { "name": "Cognition", "tier": "frontier" },
+    "morph": { "name": "Morph", "tier": "frontier" },
+
+    "azure": {
+      "name": "Azure OpenAI",
+      "tier": "cloud",
+      "pricing_url": "https://azure.microsoft.com/en-us/pricing/details/cognitive-services/openai-service/",
+      "docs_url": "https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models",
+      "aliases": ["azure_text"]
+    },
+    "azure_ai": {
+      "name": "Azure AI Foundry",
+      "tier": "cloud",
+      "pricing_url": "https://azure.microsoft.com/en-us/pricing/details/ai-foundry/",
+      "docs_url": "https://learn.microsoft.com/en-us/azure/ai-foundry/"
+    },
+    "bedrock": {
+      "name": "AWS Bedrock",
+      "tier": "cloud",
+      "pricing_url": "https://aws.amazon.com/bedrock/pricing/",
+      "docs_url": "https://docs.aws.amazon.com/bedrock/latest/userguide/models-supported.html",
+      "aliases": ["bedrock_converse", "bedrock_mantle", "amazon_nova", "sagemaker", "agentcore", "aws_polly"]
+    },
+    "vertex_ai": {
+      "name": "Google Vertex AI",
+      "tier": "cloud",
+      "pricing_url": "https://cloud.google.com/vertex-ai/generative-ai/pricing",
+      "docs_url": "https://cloud.google.com/vertex-ai/generative-ai/docs/models",
+      "aliases": [
+        "vertex_ai-language-models", "vertex_ai-anthropic_models", "vertex_ai-llama_models",
+        "vertex_ai-mistral_models", "vertex_ai-ai21_models", "vertex_ai-deepseek_models",
+        "vertex_ai-embedding-models", "vertex_ai-image-models", "vertex_ai-video-models",
+        "vertex_ai-text-models", "vertex_ai-qwen_models", "vertex_ai-moonshot_models",
+        "vertex_ai-minimax_models", "vertex_ai-openai_models", "vertex_ai-zai_models"
+      ]
+    },
+    "watsonx": {
+      "name": "IBM watsonx",
+      "tier": "cloud",
+      "pricing_url": "https://www.ibm.com/products/watsonx-ai/pricing",
+      "docs_url": "https://www.ibm.com/docs/en/watsonx"
+    },
+    "databricks": {
+      "name": "Databricks",
+      "tier": "cloud",
+      "pricing_url": "https://www.databricks.com/product/pricing/foundation-model-serving",
+      "docs_url": "https://docs.databricks.com/en/machine-learning/foundation-models/"
+    },
+    "snowflake": { "name": "Snowflake Cortex", "tier": "cloud", "pricing_url": "https://www.snowflake.com/legal-files/CreditConsumptionTable.pdf" },
+    "oci": { "name": "Oracle OCI GenAI", "tier": "cloud", "pricing_url": "https://www.oracle.com/artificial-intelligence/generative-ai/pricing/" },
+    "cloudflare": { "name": "Cloudflare Workers AI", "tier": "cloud", "pricing_url": "https://developers.cloudflare.com/workers-ai/platform/pricing/" },
+    "scaleway": { "name": "Scaleway", "tier": "cloud", "pricing_url": "https://www.scaleway.com/en/pricing/model-as-a-service/" },
+    "ovhcloud": { "name": "OVHcloud AI Endpoints", "tier": "cloud", "pricing_url": "https://www.ovhcloud.com/en/public-cloud/prices/" },
+    "nebius": { "name": "Nebius AI Studio", "tier": "cloud", "pricing_url": "https://nebius.com/prices-ai-studio" },
+    "heroku": { "name": "Heroku Managed Inference", "tier": "cloud" },
+    "gradient_ai": { "name": "DigitalOcean Gradient AI", "tier": "cloud" },
+    "crusoe": { "name": "Crusoe", "tier": "cloud" },
+    "lambda_ai": { "name": "Lambda", "tier": "cloud" },
+    "nscale": { "name": "Nscale", "tier": "cloud" },
+    "nvidia_nim": { "name": "NVIDIA NIM", "tier": "cloud" },
+    "wandb": { "name": "W&B Inference", "tier": "cloud" },
+    "baseten": { "name": "Baseten", "tier": "cloud" },
+    "gmi": { "name": "GMI Cloud", "tier": "cloud" },
+    "libertai": { "name": "LibertAI", "tier": "cloud" },
+
+    "groq": {
+      "name": "Groq",
+      "tier": "inference",
+      "pricing_url": "https://groq.com/pricing/",
+      "docs_url": "https://console.groq.com/docs/models"
+    },
+    "together_ai": {
+      "name": "Together AI",
+      "tier": "inference",
+      "pricing_url": "https://www.together.ai/pricing",
+      "docs_url": "https://docs.together.ai/docs/serverless-models"
+    },
+    "fireworks_ai": {
+      "name": "Fireworks AI",
+      "tier": "inference",
+      "pricing_url": "https://fireworks.ai/pricing",
+      "docs_url": "https://docs.fireworks.ai/",
+      "aliases": ["fireworks_ai-embedding-models"]
+    },
+    "deepinfra": { "name": "DeepInfra", "tier": "inference", "pricing_url": "https://deepinfra.com/pricing" },
+    "cerebras": { "name": "Cerebras", "tier": "inference", "pricing_url": "https://www.cerebras.ai/pricing" },
+    "sambanova": { "name": "SambaNova", "tier": "inference", "pricing_url": "https://cloud.sambanova.ai/plans/pricing" },
+    "hyperbolic": { "name": "Hyperbolic", "tier": "inference", "pricing_url": "https://hyperbolic.xyz/pricing" },
+    "novita": { "name": "Novita AI", "tier": "inference", "pricing_url": "https://novita.ai/pricing" },
+    "replicate": { "name": "Replicate", "tier": "inference", "pricing_url": "https://replicate.com/pricing" },
+    "perplexity": { "name": "Perplexity", "tier": "inference", "pricing_url": "https://docs.perplexity.ai/getting-started/pricing" },
+    "anyscale": { "name": "Anyscale", "tier": "inference" },
+    "friendliai": { "name": "FriendliAI", "tier": "inference" },
+    "featherless_ai": { "name": "Featherless AI", "tier": "inference" },
+    "nlp_cloud": { "name": "NLP Cloud", "tier": "inference" },
+    "lemonade": { "name": "Lemonade", "tier": "inference" },
+    "llamagate": { "name": "LlamaGate", "tier": "inference" },
+    "tensormesh": { "name": "TensorMesh", "tier": "inference" },
+    "ollama": { "name": "Ollama (local)", "tier": "local", "docs_url": "https://ollama.com/library" },
+
+    "openrouter": {
+      "name": "OpenRouter",
+      "tier": "gateway",
+      "pricing_url": "https://openrouter.ai/models",
+      "docs_url": "https://openrouter.ai/docs"
+    },
+    "vercel_ai_gateway": { "name": "Vercel AI Gateway", "tier": "gateway", "pricing_url": "https://vercel.com/docs/ai-gateway/pricing" },
+    "aiml": { "name": "AI/ML API", "tier": "gateway" },
+    "github_copilot": { "name": "GitHub Copilot", "tier": "gateway" },
+    "v0": { "name": "v0", "tier": "gateway" },
+
+    "voyage": { "name": "Voyage AI", "tier": "specialist", "pricing_url": "https://docs.voyageai.com/docs/pricing" },
+    "jina_ai": { "name": "Jina AI", "tier": "specialist" },
+    "deepgram": { "name": "Deepgram", "tier": "specialist", "pricing_url": "https://deepgram.com/pricing" },
+    "assemblyai": { "name": "AssemblyAI", "tier": "specialist", "pricing_url": "https://www.assemblyai.com/pricing" },
+    "elevenlabs": { "name": "ElevenLabs", "tier": "specialist", "pricing_url": "https://elevenlabs.io/pricing" },
+    "soniox": { "name": "Soniox", "tier": "specialist" },
+    "stability": { "name": "Stability AI", "tier": "specialist", "pricing_url": "https://platform.stability.ai/pricing" },
+    "black_forest_labs": { "name": "Black Forest Labs (FLUX)", "tier": "specialist" },
+    "recraft": { "name": "Recraft", "tier": "specialist" },
+    "runwayml": { "name": "Runway", "tier": "specialist" },
+    "fal_ai": { "name": "fal.ai", "tier": "specialist", "pricing_url": "https://fal.ai/pricing" },
+    "darkbloom": { "name": "Darkbloom", "tier": "specialist" },
+    "pinstripes": { "name": "Pinstripes", "tier": "specialist" },
+    "scx-ai": { "name": "SCX AI", "tier": "specialist" }
+  },
+  "exclude_providers": [
+    "searxng", "serper", "tavily", "duckduckgo", "google_pse", "firecrawl",
+    "exa_ai", "linkup", "dataforseo", "you_com", "nimble", "apiserpent",
+    "bing_grounding", "reducto", "parallel_ai", "tinyfish",
+    "one of https://docs.litellm.ai/docs/providers"
+  ]
+}

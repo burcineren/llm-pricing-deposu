@@ -1,0 +1,44 @@
+{
+  "$comment": [
+    "Controls the 'Flagship models' table in the READMEs and the site's default view.",
+    "The full dataset is unaffected — this is presentation only.",
+    "",
+    "`providers` is ordered; each entry lists the model-name prefixes that belong to",
+    "that provider's own line-up. Prefixes matter because most hosts resell each other's",
+    "models: without them, `deepseek-v4-pro` shows up under Qwen and `glm-5-2` under Mistral,",
+    "which is technically true (that is who bills you) but useless as a flagship table.",
+    "",
+    "`exclude_patterns` drops variant spellings of a model already in the table —",
+    "preview channels, per-mode splits, and modality-specific endpoints."
+  ],
+  "per_provider": 5,
+  "exclude_patterns": [
+    "-(non-)?reasoning(-latest)?$",
+    "-multi-agent$",
+    "-(preview|exp|experimental|beta|alpha|rc\\d*)$",
+    "-(preview|exp|experimental)-",
+    "-(tts|stt|audio|live|realtime|image|vision|embed|embedding|rerank|search|guard|moderation)$",
+    "-customtools$",
+    "-thinking$",
+    "-latest-",
+    "^ft:",
+    "-(nano|micro)-\\d{4}$",
+    "\\d{4}-\\d{2}-\\d{2}$",
+    "-\\d{8}$",
+    "-\\d{4}$"
+  ],
+  "providers": [
+    { "slug": "openai", "prefixes": ["gpt-", "o1", "o3", "o4", "chatgpt-"] },
+    { "slug": "anthropic", "prefixes": ["claude-"] },
+    { "slug": "gemini", "prefixes": ["gemini-"] },
+    { "slug": "xai", "prefixes": ["grok-"] },
+    { "slug": "deepseek", "prefixes": ["deepseek-"] },
+    { "slug": "meta_llama", "prefixes": ["llama-", "llama"] },
+    { "slug": "mistral", "prefixes": ["mistral-", "magistral-", "ministral-", "codestral", "devstral", "pixtral"] },
+    { "slug": "qwen_ai_platform", "prefixes": ["qwen", "qwq"] },
+    { "slug": "moonshot", "prefixes": ["kimi-", "moonshot-"] },
+    { "slug": "zai", "prefixes": ["glm-"] },
+    { "slug": "cohere", "prefixes": ["command-", "command"] },
+    { "slug": "groq", "prefixes": ["llama", "kimi", "qwen", "gpt-oss", "openai/"] }
+  ]
+}

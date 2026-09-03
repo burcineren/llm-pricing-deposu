@@ -1,0 +1,614 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LLM Pricing Deposu — compare price, context and rate limits</title>
+<meta name="description" content="Daily-updated pricing, context windows and rate limits for every LLM. Search, filter and estimate what a request actually costs.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💸</text></svg>">
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #ffffff;
+  --bg-soft: #f6f8fa;
+  --bg-inset: #eef1f4;
+  --fg: #1f2328;
+  --fg-muted: #636c76;
+  --border: #d8dee4;
+  --accent: #0969da;
+  --accent-soft: #ddf4ff;
+  --up: #cf222e;
+  --down: #1a7f37;
+  --radius: 8px;
+  --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0d1117; --bg-soft: #151b23; --bg-inset: #1c2129;
+    --fg: #e6edf3; --fg-muted: #9198a1; --border: #3d444d;
+    --accent: #4493f8; --accent-soft: #121d2f;
+    --up: #f85149; --down: #3fb950;
+  }
+}
+* { box-sizing: border-box; }
+html { scrollbar-gutter: stable; }
+body {
+  margin: 0; background: var(--bg); color: var(--fg);
+  font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.wrap { max-width: 1440px; margin: 0 auto; padding: 0 16px 64px; }
+
+header { border-bottom: 1px solid var(--border); background: var(--bg-soft); margin-bottom: 20px; }
+.head-inner { max-width: 1440px; margin: 0 auto; padding: 20px 16px; display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-end; justify-content: space-between; }
+h1 { font-size: 20px; margin: 0 0 4px; letter-spacing: -0.01em; }
+h1 span { font-weight: 400; color: var(--fg-muted); }
+.sub { color: var(--fg-muted); font-size: 13px; margin: 0; }
+.head-links { display: flex; gap: 14px; font-size: 13px; flex-wrap: wrap; }
+
+.stats { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 18px; }
+.stat { background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius); padding: 10px 14px; min-width: 104px; }
+.stat b { display: block; font-size: 20px; font-variant-numeric: tabular-nums; line-height: 1.2; }
+.stat span { font-size: 11px; color: var(--fg-muted); text-transform: uppercase; letter-spacing: .04em; }
+
+.panel { background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px; margin-bottom: 16px; }
+.controls { display: grid; grid-template-columns: minmax(220px, 2fr) repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; align-items: end; }
+label.field { display: flex; flex-direction: column; gap: 4px; font-size: 11px; color: var(--fg-muted); text-transform: uppercase; letter-spacing: .04em; }
+input[type=text], input[type=number], select {
+  font: inherit; padding: 7px 9px; border: 1px solid var(--border); border-radius: 6px;
+  background: var(--bg); color: var(--fg); width: 100%; min-width: 0;
+}
+input[type=number] { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+input:focus, select:focus { outline: 2px solid var(--accent); outline-offset: -1px; border-color: var(--accent); }
+
+.chips { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 12px; align-items: center; }
+.chips > span.lbl { font-size: 11px; color: var(--fg-muted); text-transform: uppercase; letter-spacing: .04em; margin-right: 2px; }
+.chip {
+  font: inherit; font-size: 12px; padding: 4px 10px; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--border); background: var(--bg); color: var(--fg-muted); white-space: nowrap;
+}
+.chip:hover { border-color: var(--accent); color: var(--fg); }
+.chip[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); font-weight: 600; }
+
+details.calc summary { cursor: pointer; font-weight: 600; font-size: 13px; list-style: none; display: flex; align-items: center; gap: 6px; }
+details.calc summary::before { content: "▸"; font-size: 11px; color: var(--fg-muted); transition: transform .15s; }
+details.calc[open] summary::before { transform: rotate(90deg); }
+details.calc .controls { margin-top: 12px; }
+.hint { font-size: 12px; color: var(--fg-muted); margin: 8px 0 0; }
+
+.tablewrap { border: 1px solid var(--border); border-radius: var(--radius); overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th, td { padding: 7px 10px; text-align: left; border-bottom: 1px solid var(--border); white-space: nowrap; }
+thead th {
+  position: sticky; top: 0; z-index: 2; background: var(--bg-inset); font-size: 11px;
+  text-transform: uppercase; letter-spacing: .04em; color: var(--fg-muted); cursor: pointer; user-select: none;
+}
+thead th:hover { color: var(--fg); }
+thead th[data-dir]::after { content: " ↕"; opacity: .35; }
+thead th[data-dir="asc"]::after { content: " ↑"; opacity: 1; color: var(--accent); }
+thead th[data-dir="desc"]::after { content: " ↓"; opacity: 1; color: var(--accent); }
+td.num, th.num { text-align: right; font-family: var(--mono); font-variant-numeric: tabular-nums; }
+tbody tr { cursor: pointer; }
+tbody tr:hover { background: var(--bg-soft); }
+tbody tr[aria-expanded="true"] { background: var(--accent-soft); }
+td.model { font-family: var(--mono); font-size: 12px; max-width: 340px; overflow: hidden; text-overflow: ellipsis; }
+.badge { display: inline-block; font-size: 10px; padding: 1px 6px; border-radius: 999px; border: 1px solid var(--border); color: var(--fg-muted); margin-left: 6px; vertical-align: 1px; }
+.badge.warn { border-color: var(--up); color: var(--up); }
+.free { color: var(--down); font-weight: 600; }
+.caps { letter-spacing: 2px; font-size: 12px; }
+.detail td { white-space: normal; background: var(--bg-soft); padding: 14px 16px; }
+.detail dl { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px 20px; margin: 0 0 10px; }
+.detail dt { font-size: 11px; color: var(--fg-muted); text-transform: uppercase; letter-spacing: .04em; }
+.detail dd { margin: 2px 0 0; font-family: var(--mono); font-size: 12.5px; }
+.detail .conflict { border-left: 3px solid var(--up); padding: 8px 12px; background: var(--bg); border-radius: 0 6px 6px 0; margin-top: 10px; font-size: 12.5px; }
+.detail .links { margin-top: 10px; display: flex; gap: 14px; font-size: 13px; flex-wrap: wrap; }
+
+.tablefoot { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 2px; font-size: 12px; color: var(--fg-muted); flex-wrap: wrap; }
+button.more { font: inherit; font-size: 13px; padding: 7px 16px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg); color: var(--fg); cursor: pointer; }
+button.more:hover { border-color: var(--accent); color: var(--accent); }
+.empty { padding: 48px 16px; text-align: center; color: var(--fg-muted); }
+footer { margin-top: 32px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 12px; color: var(--fg-muted); }
+.disclaimer { background: var(--bg-inset); border-radius: var(--radius); padding: 10px 14px; font-size: 12.5px; color: var(--fg-muted); margin-bottom: 16px; }
+@media (max-width: 700px) {
+  .hide-sm { display: none; }
+  .head-inner { padding: 16px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="head-inner">
+    <div>
+      <h1>💸 LLM Pricing Deposu <span>· compare price, context &amp; limits</span></h1>
+      <p class="sub" id="freshness">Loading…</p>
+    </div>
+    <nav class="head-links">
+      <a href="https://github.com/apideposu/llm-pricing-deposu">GitHub</a>
+      <a href="https://github.com/apideposu/llm-pricing-deposu/blob/main/CHANGELOG.md">Price changes</a>
+      <a href="data/models.json">models.json</a>
+      <a href="https://github.com/apideposu/llm-pricing-deposu/issues/new?template=price-correction.yml">Report a wrong price</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="stats" id="stats"></div>
+
+  <div class="panel">
+    <div class="controls">
+      <label class="field">Search
+        <input type="text" id="q" placeholder="gpt, claude, 1M context, groq…" autocomplete="off" spellcheck="false">
+      </label>
+      <label class="field">Provider
+        <select id="provider"><option value="">All providers</option></select>
+      </label>
+      <label class="field">Category
+        <select id="tier">
+          <option value="">All categories</option>
+          <option value="frontier">Model labs</option>
+          <option value="cloud">Cloud platforms</option>
+          <option value="inference">Inference hosts</option>
+          <option value="gateway">Gateways</option>
+          <option value="specialist">Specialist</option>
+          <option value="local">Self-hosted / local</option>
+        </select>
+      </label>
+      <label class="field">Type
+        <select id="mode">
+          <option value="chat">Chat</option>
+          <option value="">All types</option>
+          <option value="embedding">Embedding</option>
+          <option value="image_generation">Image</option>
+          <option value="audio_transcription">Transcription</option>
+          <option value="audio_speech">Speech</option>
+          <option value="rerank">Rerank</option>
+          <option value="video_generation">Video</option>
+        </select>
+      </label>
+      <label class="field">Max $/1M in
+        <input type="number" id="maxprice" placeholder="any" min="0" step="0.1">
+      </label>
+      <label class="field">Min context
+        <select id="minctx">
+          <option value="0">any</option>
+          <option value="32000">32K+</option>
+          <option value="128000">128K+</option>
+          <option value="200000">200K+</option>
+          <option value="1000000">1M+</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="chips" id="caps">
+      <span class="lbl">Must support</span>
+      <button class="chip" data-cap="reasoning" aria-pressed="false">🧠 reasoning</button>
+      <button class="chip" data-cap="vision" aria-pressed="false">👁 vision</button>
+      <button class="chip" data-cap="function_calling" aria-pressed="false">🔧 tools</button>
+      <button class="chip" data-cap="prompt_caching" aria-pressed="false">💾 caching</button>
+      <button class="chip" data-cap="structured_output" aria-pressed="false">📐 structured</button>
+      <button class="chip" data-cap="audio_input" aria-pressed="false">🔊 audio in</button>
+      <button class="chip" id="hidevariants" aria-pressed="true">⊟ collapse variants</button>
+      <button class="chip" id="includelocal" aria-pressed="false">🏠 include self-hosted</button>
+      <button class="chip" id="conflictsonly" aria-pressed="false">⚠ conflicts only</button>
+    </div>
+  </div>
+
+  <details class="panel calc" id="calcpanel">
+    <summary>Cost calculator — price a real workload</summary>
+    <div class="controls">
+      <label class="field">Input tokens / request
+        <input type="number" id="cin" value="4000" min="0" step="100">
+      </label>
+      <label class="field">Output tokens / request
+        <input type="number" id="cout" value="800" min="0" step="100">
+      </label>
+      <label class="field">Cached input tokens
+        <input type="number" id="ccache" value="0" min="0" step="100">
+      </label>
+      <label class="field">Requests / month
+        <input type="number" id="creq" value="100000" min="0" step="1000">
+      </label>
+    </div>
+    <p class="hint">
+      Adds a <b>Monthly</b> column and sorts by it. Long-context surcharges are applied when the request crosses a
+      provider's threshold. Cached tokens bill at <code>cache_read</code> where the provider publishes one, and at the
+      normal input rate otherwise — cache <em>writes</em> are not modelled, so a cache-heavy workload will run slightly
+      higher than shown. Batch and priority tiers are ignored.
+    </p>
+  </details>
+
+  <div class="disclaimer">
+    Aggregated from public sources on a best-effort basis and <b>sometimes wrong</b>. Enterprise agreements, committed-spend
+    discounts and free tiers are out of scope. Confirm on the provider's own pricing page — every row links to it —
+    before making a purchasing decision.
+  </div>
+
+  <div class="tablewrap">
+    <table>
+      <thead>
+        <tr>
+          <th data-sort="model" data-dir="">Model</th>
+          <th data-sort="provider" data-dir="" class="hide-sm">Provider</th>
+          <th data-sort="input" data-dir="asc" class="num">In $/1M</th>
+          <th data-sort="output" data-dir="" class="num">Out $/1M</th>
+          <th data-sort="cache_read" data-dir="" class="num hide-sm">Cache $/1M</th>
+          <th data-sort="context" data-dir="" class="num">Context</th>
+          <th data-sort="maxout" data-dir="" class="num hide-sm">Max out</th>
+          <th class="hide-sm">Supports</th>
+          <th data-sort="cost" data-dir="" class="num" id="costhead" hidden>Monthly</th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+
+  <div class="tablefoot">
+    <span id="count"></span>
+    <button class="more" id="more" hidden>Show more</button>
+  </div>
+
+  <footer>
+    Data: <a href="https://github.com/apideposu/llm-pricing-deposu">llm-pricing-deposu</a> (MIT) ·
+    built on <a href="https://github.com/BerriAI/litellm">LiteLLM</a>,
+    <a href="https://models.dev">models.dev</a> and
+    <a href="https://openrouter.ai">OpenRouter</a> ·
+    part of <a href="https://github.com/apideposu/public-api-deposu">API Deposu</a>.
+    Not affiliated with any model provider.
+  </footer>
+</div>
+
+<script>
+const PAGE = 100;
+const state = {
+  models: [], meta: null, providers: new Map(),
+  sort: { key: 'input', dir: 'asc' }, limit: PAGE,
+  caps: new Set(), collapseVariants: true, conflictsOnly: false, includeLocal: false,
+  open: null, calc: false,
+};
+
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+const VARIANT_RE = /-(non-)?reasoning(-latest)?$|-(preview|exp|experimental|beta|alpha)$|-\d{8}$|\d{4}-\d{2}-\d{2}$|-(tts|customtools|thinking)$/i;
+
+function fmtUSD(v) {
+  if (v === null || v === undefined) return '<span style="opacity:.4">—</span>';
+  if (v === 0) return '<span class="free">free</span>';
+  if (v >= 100) return '$' + v.toFixed(0);
+  if (v >= 1) return '$' + trim(v.toFixed(2));
+  if (v >= 0.01) return '$' + trim(v.toFixed(3));
+  return '$' + trim(v.toFixed(4));
+}
+const trim = (s) => s.includes('.') ? s.replace(/0+$/, '').replace(/\.$/, '') : s;
+
+function fmtTokens(n) {
+  if (!n) return '<span style="opacity:.4">—</span>';
+  if (n >= 1e6) return trim((n / 1e6).toFixed(2)) + 'M';
+  if (n >= 1e3) return Math.round(n / 1e3) + 'K';
+  return String(n);
+}
+
+function fmtMoney(v) {
+  if (v === null) return '<span style="opacity:.4">—</span>';
+  if (v >= 1000) return '$' + Math.round(v).toLocaleString('en-US');
+  if (v >= 1) return '$' + v.toFixed(2);
+  return '$' + v.toFixed(4);
+}
+
+const CAP_ICON = {
+  reasoning: '🧠', vision: '👁', function_calling: '🔧', prompt_caching: '💾',
+  structured_output: '📐', audio_input: '🔊', audio_output: '🔊', pdf_input: '📄',
+  computer_use: '🖱', web_search: '🌐', video_input: '🎬',
+};
+
+function capIcons(m) {
+  const seen = new Set();
+  const out = [];
+  for (const [k, v] of Object.entries(m.capabilities || {})) {
+    if (!v || !CAP_ICON[k] || seen.has(CAP_ICON[k])) continue;
+    seen.add(CAP_ICON[k]);
+    out.push(CAP_ICON[k]);
+  }
+  return out.join('') || '<span style="opacity:.4">—</span>';
+}
+
+/** Monthly spend for the workload in the calculator panel. */
+function monthlyCost(m) {
+  if (!state.calc) return null;
+  const inTok = +$('cin').value || 0;
+  const outTok = +$('cout').value || 0;
+  const cached = +$('ccache').value || 0;
+  const reqs = +$('creq').value || 0;
+  // Loose null-check: the site build strips null fields, so absent reads as undefined.
+  if (m.pricing.input == null || m.pricing.output == null) return null;
+
+  const tier = (m.pricing.tiers || [])
+    .slice()
+    .sort((a, b) => b.above_tokens - a.above_tokens)
+    .find((t) => inTok + cached > t.above_tokens);
+
+  const inRate = (tier && tier.input != null) ? tier.input : m.pricing.input;
+  const outRate = (tier && tier.output != null) ? tier.output : m.pricing.output;
+  const cacheRate = (tier && tier.cache_read != null) ? tier.cache_read
+    : (m.pricing.cache_read != null ? m.pricing.cache_read : inRate);
+
+  return ((inTok * inRate + outTok * outRate + cached * cacheRate) / 1e6) * reqs;
+}
+
+function matches(m) {
+  const q = $('q').value.trim().toLowerCase();
+  if (q) {
+    const hay = (m.id + ' ' + (m.display_name || '') + ' ' + m.provider_name).toLowerCase();
+    if (!q.split(/\s+/).every((term) => hay.includes(term))) return false;
+  }
+  if ($('provider').value && m.provider !== $('provider').value) return false;
+  if ($('tier').value && m.provider_tier !== $('tier').value) return false;
+
+  // Locally-run models are free by definition and would otherwise fill every
+  // cheapest-first view, hiding the hosted models the visitor came to compare.
+  // Asking for them explicitly — by chip or by category — still shows them.
+  if (!state.includeLocal && $('tier').value !== 'local' && m.provider_tier === 'local') return false;
+  if ($('mode').value && m.mode !== $('mode').value) return false;
+
+  const maxp = $('maxprice').value;
+  if (maxp !== '' && (m.pricing.input == null || m.pricing.input > +maxp)) return false;
+
+  const minctx = +$('minctx').value;
+  if (minctx && (m.context.input || 0) < minctx) return false;
+
+  for (const cap of state.caps) if (!m.capabilities?.[cap]) return false;
+  if (state.conflictsOnly && !(m.conflicts || []).length) return false;
+  if (state.collapseVariants && VARIANT_RE.test(m.model)) return false;
+
+  return true;
+}
+
+const SORTERS = {
+  model: (m) => m.id,
+  provider: (m) => m.provider_name + m.model,
+  input: (m) => m.pricing.input,
+  output: (m) => m.pricing.output,
+  cache_read: (m) => m.pricing.cache_read,
+  context: (m) => m.context.input,
+  maxout: (m) => m.context.output,
+  cost: (m) => monthlyCost(m),
+};
+
+function render() {
+  const rows = state.models.filter(matches);
+  const get = SORTERS[state.sort.key];
+  const mul = state.sort.dir === 'asc' ? 1 : -1;
+
+  rows.sort((a, b) => {
+    const av = get(a), bv = get(b);
+    // Missing values sort last in both directions — an unknown price is not "cheapest".
+    const an = av === null || av === undefined, bn = bv === null || bv === undefined;
+    if (an && bn) return a.id.localeCompare(b.id);
+    if (an) return 1;
+    if (bn) return -1;
+    if (typeof av === 'string') return mul * av.localeCompare(bv);
+    return mul * (av - bv);
+  });
+
+  const shown = rows.slice(0, state.limit);
+  const tbody = $('rows');
+
+  if (!shown.length) {
+    tbody.innerHTML = '<tr><td colspan="9" class="empty">Nothing matches those filters.</td></tr>';
+  } else {
+    tbody.innerHTML = shown.map(rowHTML).join('');
+  }
+
+  $('count').textContent = rows.length
+    ? `Showing ${Math.min(state.limit, rows.length).toLocaleString()} of ${rows.length.toLocaleString()} models`
+    : '';
+  $('more').hidden = rows.length <= state.limit;
+  $('costhead').hidden = !state.calc;
+}
+
+function rowHTML(m) {
+  const conflict = (m.conflicts || []).length
+    ? '<span class="badge warn" title="Sources disagree on this model — click for details">⚠</span>' : '';
+  const dep = m.deprecated_at
+    ? `<span class="badge" title="Retires ${esc(m.deprecated_at)}">retiring</span>` : '';
+  const costCell = state.calc ? `<td class="num">${fmtMoney(monthlyCost(m))}</td>` : '';
+
+  const detail = state.open === m.id ? detailHTML(m) : '';
+
+  return `<tr data-id="${esc(m.id)}" aria-expanded="${state.open === m.id}">
+    <td class="model" title="${esc(m.id)}">${esc(m.model)}${conflict}${dep}</td>
+    <td class="hide-sm">${esc(m.provider_name)}</td>
+    <td class="num">${fmtUSD(m.pricing.input)}</td>
+    <td class="num">${fmtUSD(m.pricing.output)}</td>
+    <td class="num hide-sm">${fmtUSD(m.pricing.cache_read)}</td>
+    <td class="num">${fmtTokens(m.context.input)}</td>
+    <td class="num hide-sm">${fmtTokens(m.context.output)}</td>
+    <td class="caps hide-sm">${capIcons(m)}</td>
+    ${costCell}
+  </tr>${detail}`;
+}
+
+function detailHTML(m) {
+  const p = m.pricing;
+  const dd = (label, value) => value === null || value === undefined || value === ''
+    ? '' : `<div><dt>${label}</dt><dd>${value}</dd></div>`;
+
+  const tiers = (p.tiers || []).map((t) =>
+    `<div><dt>Above ${fmtTokens(t.above_tokens)}</dt><dd>${fmtUSD(t.input)} in / ${fmtUSD(t.output)} out</dd></div>`
+  ).join('');
+
+  const conflicts = (m.conflicts || []).map((c) =>
+    `<div class="conflict"><b>Sources disagree on <code>${esc(c.field)}</code>:</b> ` +
+    c.values.map((v) => `${esc(v.source)} says <b>${v.value}</b>`).join(' · ') +
+    ` — the highest-precedence source won. Verify on the provider's page.</div>`
+  ).join('');
+
+  const caps = Object.keys(m.capabilities || {}).filter((k) => m.capabilities[k]);
+
+  return `<tr class="detail"><td colspan="9">
+    <dl>
+      ${dd('Full id', `<code>${esc(m.id)}</code>`)}
+      ${dd('Cache write', p.cache_write != null ? fmtUSD(p.cache_write) : null)}
+      ${dd('Batch in / out', p.input_batch != null ? `${fmtUSD(p.input_batch)} / ${fmtUSD(p.output_batch)}` : null)}
+      ${dd('Audio in / out', p.input_audio != null ? `${fmtUSD(p.input_audio)} / ${fmtUSD(p.output_audio)}` : null)}
+      ${dd('Per image', p.per_image != null ? '$' + p.per_image : null)}
+      ${dd('Per second', p.per_second != null ? '$' + p.per_second : null)}
+      ${dd('Rate limit', m.rate_limits?.rpm || m.rate_limits?.tpm
+        ? `${m.rate_limits.rpm ? m.rate_limits.rpm.toLocaleString() + ' rpm' : ''}${m.rate_limits.rpm && m.rate_limits.tpm ? ' · ' : ''}${m.rate_limits.tpm ? m.rate_limits.tpm.toLocaleString() + ' tpm' : ''}` : null)}
+      ${dd('Released', m.released_at)}
+      ${dd('Knowledge cutoff', m.knowledge_cutoff)}
+      ${dd('Retires', m.deprecated_at)}
+      ${dd('Open weights', m.open_weights === true ? 'yes' : m.open_weights === false ? 'no' : null)}
+      ${dd('Modalities', m.modalities?.input?.length ? `${m.modalities.input.join(', ')} → ${(m.modalities.output || ['text']).join(', ')}` : null)}
+      ${dd('Supports', caps.length ? caps.join(', ') : null)}
+      ${dd('Sources', m.sources.join(', '))}
+      ${tiers}
+    </dl>
+    ${conflicts}
+    <div class="links">
+      ${m.pricing_url ? `<a href="${esc(m.pricing_url)}" target="_blank" rel="noopener">Official pricing ↗</a>` : ''}
+      ${m.docs_url ? `<a href="${esc(m.docs_url)}" target="_blank" rel="noopener">Docs ↗</a>` : ''}
+      <a href="https://github.com/apideposu/llm-pricing-deposu/issues/new?template=price-correction.yml&title=${encodeURIComponent('Price correction: ' + m.id)}" target="_blank" rel="noopener">Report a wrong price ↗</a>
+    </div>
+  </td></tr>`;
+}
+
+function renderStats() {
+  const c = state.meta.counts;
+  const live = state.meta.sources.filter((s) => s.ok).length;
+  const stats = [
+    ['Models', c.models.toLocaleString()],
+    ['Providers', c.providers],
+    ['With prices', c.priced.toLocaleString()],
+    ['Sources live', `${live}/${state.meta.sources.length}`],
+    ['Recent changes', (state.meta.recent_changes || []).length],
+  ];
+  $('stats').innerHTML = stats.map(([k, v]) => `<div class="stat"><b>${v}</b><span>${k}</span></div>`).join('');
+
+  const when = new Date(state.meta.generated_at);
+  const hrs = Math.round((Date.now() - when) / 3600000);
+  $('freshness').textContent =
+    `${c.models.toLocaleString()} models from ${c.providers} providers · updated ${hrs < 1 ? 'less than an hour' : hrs + ' hour' + (hrs === 1 ? '' : 's')} ago (${when.toISOString().slice(0, 10)})`;
+}
+
+function renderProviderOptions() {
+  const opts = [...state.providers.values()]
+    .sort((a, b) => b.count - a.count)
+    .map((p) => `<option value="${esc(p.slug)}">${esc(p.name)} (${p.count})</option>`)
+    .join('');
+  $('provider').insertAdjacentHTML('beforeend', opts);
+}
+
+function wire() {
+  for (const id of ['q', 'provider', 'tier', 'mode', 'maxprice', 'minctx']) {
+    $(id).addEventListener('input', () => { state.limit = PAGE; render(); });
+  }
+  for (const id of ['cin', 'cout', 'ccache', 'creq']) {
+    $(id).addEventListener('input', render);
+  }
+
+  $('calcpanel').addEventListener('toggle', () => {
+    state.calc = $('calcpanel').open;
+    if (state.calc) state.sort = { key: 'cost', dir: 'asc' };
+    syncSortHeaders();
+    render();
+  });
+
+  document.querySelectorAll('#caps .chip[data-cap]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const cap = btn.dataset.cap;
+      const on = btn.getAttribute('aria-pressed') === 'true';
+      btn.setAttribute('aria-pressed', String(!on));
+      on ? state.caps.delete(cap) : state.caps.add(cap);
+      state.limit = PAGE;
+      render();
+    });
+  });
+
+  $('hidevariants').addEventListener('click', (e) => {
+    state.collapseVariants = !state.collapseVariants;
+    e.currentTarget.setAttribute('aria-pressed', String(state.collapseVariants));
+    state.limit = PAGE;
+    render();
+  });
+
+  $('includelocal').addEventListener('click', (e) => {
+    state.includeLocal = !state.includeLocal;
+    e.currentTarget.setAttribute('aria-pressed', String(state.includeLocal));
+    state.limit = PAGE;
+    render();
+  });
+
+  $('conflictsonly').addEventListener('click', (e) => {
+    state.conflictsOnly = !state.conflictsOnly;
+    e.currentTarget.setAttribute('aria-pressed', String(state.conflictsOnly));
+    state.limit = PAGE;
+    render();
+  });
+
+  document.querySelectorAll('thead th[data-sort]').forEach((th) => {
+    th.addEventListener('click', () => {
+      const key = th.dataset.sort;
+      if (state.sort.key === key) {
+        state.sort.dir = state.sort.dir === 'asc' ? 'desc' : 'asc';
+      } else {
+        // Prices read best cheapest-first; everything else biggest-first.
+        state.sort = { key, dir: ['input', 'output', 'cache_read', 'cost', 'model', 'provider'].includes(key) ? 'asc' : 'desc' };
+      }
+      syncSortHeaders();
+      render();
+    });
+  });
+
+  $('rows').addEventListener('click', (e) => {
+    const tr = e.target.closest('tr[data-id]');
+    if (!tr) return;
+    state.open = state.open === tr.dataset.id ? null : tr.dataset.id;
+    render();
+  });
+
+  $('more').addEventListener('click', () => { state.limit += PAGE * 4; render(); });
+}
+
+function syncSortHeaders() {
+  document.querySelectorAll('thead th[data-sort]').forEach((th) => {
+    th.dataset.dir = th.dataset.sort === state.sort.key ? state.sort.dir : '';
+  });
+}
+
+async function boot() {
+  let data;
+  try {
+    const res = await fetch('data/models.json');
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    data = await res.json();
+  } catch (err) {
+    $('rows').innerHTML = `<tr><td colspan="9" class="empty">Could not load the dataset (${esc(err.message)}).<br>
+      Grab it directly from <a href="https://github.com/apideposu/llm-pricing-deposu/blob/main/data/models.json">GitHub</a>.</td></tr>`;
+    return;
+  }
+
+  state.models = data.models;
+  state.meta = data.meta;
+
+  for (const m of state.models) {
+    if (!state.providers.has(m.provider)) {
+      state.providers.set(m.provider, { slug: m.provider, name: m.provider_name, count: 0 });
+    }
+    state.providers.get(m.provider).count++;
+  }
+
+  renderStats();
+  renderProviderOptions();
+  wire();
+  syncSortHeaders();
+  render();
+}
+
+boot();
+</script>
+</body>
+</html>

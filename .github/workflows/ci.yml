@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # Catches a broken source adapter or a malformed override before it reaches main.
+      - name: Validate committed data
+        run: node scripts/validate.js
+
+      - name: Dry-run the pipeline against live sources
+        run: node scripts/update.js --dry-run
+
+      - name: Check the site builds
+        run: |
+          node scripts/build-site.js
+          test -s docs/data/models.json
