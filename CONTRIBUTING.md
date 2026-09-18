@@ -85,6 +85,7 @@ experiment.
 ## Running it
 
 ```bash
+npm test                # unit tests for merge/diff/select — fast, no network
 npm run update          # fetch, merge, diff, write everything
 npm run update:offline  # reuse .cache/*.json — no network
 npm run validate        # schema + sanity checks
@@ -110,3 +111,6 @@ To iterate offline, save a source's raw response into `.cache/<source-id>.json` 
   between the `AUTOGEN` markers in the READMEs are written by the pipeline. Edit the
   script or the overrides, then re-run — a hand edit will be silently overwritten
   tomorrow morning.
+- **Pure logic gets a unit test.** Changes to `scripts/lib/*.js` (merge precedence, the
+  diff/noise floor, family grouping, selection heuristics) should come with a matching
+  case in `test/`. `npm test` runs on every PR and needs no network.

@@ -12,7 +12,8 @@
     "update:offline": "node scripts/update.js --offline",
     "validate": "node scripts/validate.js",
     "site": "node scripts/build-site.js",
-    "serve": "node scripts/serve.js"
+    "serve": "node scripts/serve.js",
+    "test": "node --test"
   },
   "repository": {
     "type": "git",

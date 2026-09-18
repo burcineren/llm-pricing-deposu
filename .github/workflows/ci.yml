@@ -18,6 +18,10 @@ jobs:
         with:
           node-version: 22
 
+      # Pure-logic unit tests for the merge/diff/select pipeline — fast, no network.
+      - name: Unit tests
+        run: npm test
+
       # Catches a broken source adapter or a malformed override before it reaches main.
       - name: Validate committed data
         run: node scripts/validate.js

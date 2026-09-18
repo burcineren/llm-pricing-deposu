@@ -25,6 +25,15 @@
       "type": ["string", "null"],
       "description": "Best-effort model family, e.g. \"gpt-4o\", \"claude-sonnet\", \"gemini-2.5\"."
     },
+    "provider_name": {
+      "type": "string",
+      "description": "Human-readable provider name, e.g. \"OpenAI\". See data/providers.json."
+    },
+    "provider_tier": {
+      "type": "string",
+      "description": "Provider category used to group the site and README tables.",
+      "enum": ["frontier", "cloud", "inference", "gateway", "specialist", "local", "other"]
+    },
     "mode": {
       "type": "string",
       "description": "What the model does.",
